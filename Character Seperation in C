@@ -232,6 +232,16 @@ int right(PGM *pgm,int i,int j,int a){
     return max(x,y);
 }
 
+// To find rightmost position 
+int right1(PGM *pgm,int i,int j,int a){
+    int ax[5];
+    for(int k = -2;k <= 2;k++){
+        ax[k + 2] = right(pgm,i+k,j,a);
+    }
+    qsort(ax,5,sizeof(int),cmp);
+    return ax[4];
+}
+
 // To seperate connected lines
 void blank(PGM *pgm,int i,int z){                         
     pgm->data[i][z + 1] = (char) B_VAL;
@@ -253,7 +263,7 @@ void oper1(PGM *pgm){
     int y,z,k;
     for(int i = a;i < pgm->height;i = i+c){
         for(int j = 0;j < pgm->width;j++) {
-            z = right(pgm, i + b / 2 + 2, j, i + 2);
+            z = right1(pgm, i + b / 2 + 2, j, i + 2);
             if (z > j+1) {
                 k = 0;
                 for (int l = 3; l < 7; l++) {
